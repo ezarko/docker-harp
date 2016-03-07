@@ -1,0 +1,7 @@
+{
+  "name" : "Harp",
+  "version" : "0.20.1",
+  "dependencies" : {
+    "harp" : "0.20.1"
+  }
+}
