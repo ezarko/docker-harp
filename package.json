@@ -1,7 +1,7 @@
 {
   "name" : "Harp",
-  "version" : "0.20.1",
+  "version" : "0.20.3",
   "dependencies" : {
-    "harp" : "0.20.1"
+    "harp" : "0.20.3"
   }
 }

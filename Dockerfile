@@ -1,4 +1,4 @@
-FROM node:4.3.0
+FROM node:4.3.2
 
 # set up node user
 RUN useradd -ms /bin/bash node
