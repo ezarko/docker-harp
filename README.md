@@ -15,7 +15,7 @@ Often, starting a project requires the same boilerplate code over and over. This
 ### Usage
 
 ```console
-docker run --rm -v .:/myproject harp init [path]
+docker run --rm -v $PWD:/myproject harp init [path]
 ```
 
 ### Properties
@@ -48,21 +48,21 @@ _Note the default app uses [Jade](http://harpjs.com/docs/development/jade) for w
 The `--boilerplate` or `-b` flag allows you to initialize a new Harp app with a boilerplate on GitHub. The following would create a new project in the current directory using the boilerplate on [github.com/kennethormandy/hb-remedy](https://github.com/kennethormandy/hb-remedy)
 
 ```console
-docker run --rm -v .:/myproject harp init --boilerplate kennethormandy/hb-remedy
+docker run --rm -v $PWD:/myproject harp init --boilerplate kennethormandy/hb-remedy
 ```
 
 You may also skip specifying a GitHub user entirely, and use one of the [default Harp boilerplates](https://github.com/harp-boilerplates).
 
 ```console
-docker run --rm -v .:/myproject harp init --boilerplate docs
+docker run --rm -v $PWD:/myproject harp init --boilerplate docs
 ```
 
 #### Using any project as a boilerplate
 It’s also possible to initialize a project using a GitHub repository that wasn’t even intended to be a Harp boilerplate. Because Harp serves HTML, CSS & JavaScript, any project based on web technology should work. For example, you could easily serve an Apache Cordova / PhoneGap app locally.
 
 ```console
-docker run --rm -v .:/myproject harp init -b phonegap/phonegap-start
-docker run -it -v .:/myproject harp server www
+docker run --rm -v $PWD:/myproject harp init -b phonegap/phonegap-start
+docker run -it -v $PWD:/myproject -p 9000:9000 harp server www
 # Your project is now being served at http://localhost:9000
 ```
 
@@ -75,13 +75,13 @@ Running a Harp as a `server` or `multihost` is the primary purpose of the tool. 
 ### Usage
 
 ```console
-docker run -it -v .:/myproject harp server [options] [path]
+docker run -it -v $PWD:/myproject -p 9000:9000 harp server [options] [path]
 ```
 
 ### Options
 
 * **port** - (Number) Optional, The port the server listens on. Defaults to port `9000`.
-  _Note that if you change the port, you must map it in your `docker run` command using `-p`._
+  _Note that if you change the port, you must change the mapping it in your `docker run` command using `-p`._
 
 ### Properties
 
@@ -116,7 +116,7 @@ If no port was specified, the app will be available at the default port of 9000:
 Sometimes, it is a pain typing in the port every time you visit your locally-running site. By using port `80`, you don’t need to type it in. Running Harp on port `80` requires Admin Privileges. On OS X, this means you need to preface the command with `sudo`:
 
 ```console
-sudo docker run -it -v .:/myproject -p 80:80 harp server --port 80
+sudo docker run -it -v $PWD:/myproject -p 80:80 harp server --port 80
 ```
 
 If Harp clashes with something that’s already running on port `80`, you can resolve the situation [with the port conflicts guide](http://harpjs.com/docs/environment/port-conflicts).
@@ -126,7 +126,7 @@ If Harp clashes with something that’s already running on port `80`, you can re
 Harp is production-ready. By specifying an environment variable, extra LRU caching is added to make your site run even faster.
 
 ```console
-sudo docker run -it -v .:/myproject -p 80:80 -e NODE_ENV=production harp server --port 80
+sudo docker run -it -v $PWD:/myproject -p 80:80 -e NODE_ENV=production harp server --port 80
 ```
 
 ## Multihost
@@ -142,13 +142,13 @@ It’s important to stay organised while working on multiple projects. Spinning 
 ### Usage
 
 ```console
-docker run -it -v .:/myproject harp multihost [options] [path]
+docker run -it -v $PWD:/myproject -p 9000:9000 harp multihost [options] [path]
 ```
 
 ### Options
 
 * **port** - (Number) Optional, The port the server listens on. Defaults to port `9000`.
-  _Note that if you change the port, you must map it in your `docker run` command using `-p`._
+  _Note that if you change the port, you must change the mapping it in your `docker run` command using `-p`._
 
 ### Properties
 
@@ -197,7 +197,7 @@ Note this will not work if your machine is offline, as you will not be able to r
 As with `harp server`, by specifying an environment variable, you can multihost in production rather than development mode. In production mode, Harp has extra LRU caching to make your site run even faster.
 
 ```console
-sudo docker run -it -v .:/myproject -p 80:80 -e NODE_ENV=production harp multihost --port 80
+sudo docker run -it -v $PWD:/myproject -p 80:80 -e NODE_ENV=production harp multihost --port 80
 ```
 
 ### Indefinite, or running multihost on port 80
@@ -216,7 +216,7 @@ myapps/
 and by running the following from inside `myapps/`:
 
 ```console
-sudo docker run -d -v .:/myproject -p 80:80 -e NODE_ENV=production --name harpserver harp multihost -p 80
+sudo docker run -d -v $PWD:/myproject -p 80:80 -e NODE_ENV=production --name harpserver harp multihost -p 80
 ```
 
 The `-d` will allow you to continue using this instance of your command line. If you are on Windows, you may leave off `sudo`, but you will still need administrative privileges.
@@ -256,7 +256,7 @@ If for whatever reason you fall out of love with Harp, just export your project 
 ### Usage
 
 ```console
-docker run --rm -v .:/myproject harp compile [options] [projectPath] [outputPath]
+docker run --rm -v $PWD:/myproject harp compile [options] [projectPath] [outputPath]
 ```
 
 ### Mobile Example
@@ -264,8 +264,8 @@ docker run --rm -v .:/myproject harp compile [options] [projectPath] [outputPath
 Try creating a project called `mobileapp` by running `harp init mobileapp` and then compiling it:
 
 ```console
-docker run --rm -v .:/myproject harp init mobileapp
-docker run --rm -v .:/myproject harp compile mobileapp
+docker run --rm -v $PWD:/myproject harp init mobileapp
+docker run --rm -v $PWD:/myproject harp compile mobileapp
 ```
 
 Running the compile command would generate the assets as follows:

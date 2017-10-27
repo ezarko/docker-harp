@@ -4,7 +4,7 @@ FROM node:4.3.2
 RUN useradd -ms /bin/bash node
 ENV HOME /home/node
 
-COPY package.json $HOME
+COPY package.json README.md $HOME/
 RUN chown -R node:node $HOME
 
 USER node

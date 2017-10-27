@@ -1,7 +1,13 @@
 {
   "name" : "Harp",
-  "version" : "0.20.3",
+  "version" : "0.24.0",
+  "description" : "Package for creating harp docker image.",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/ezarko/docker-harp.git"
+  },
+  "license" : "MIT",
   "dependencies" : {
-    "harp" : "0.20.3"
+    "harp" : "0.24.0"
   }
 }
